@@ -1,0 +1,49 @@
+{
+  "name": "game",
+  "version": "1.0.1",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "autoprefixer": "^6.7.7",
+    "browser-sync": "^2.18.8",
+    "clean-css": "^4.0.10",
+    "css-mqpacker": "^5.0.1",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.0.4",
+    "gulp-csso": "^3.0.0",
+    "gulp-group-css-media-queries": "^1.2.0",
+    "gulp-imagemin": "^3.1.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-less": "^3.3.0",
+    "gulp-postcss": "^6.3.0",
+    "gulp-svgmin": "^1.2.3",
+    "gulp-svgstore": "^6.1.0",
+    "run-sequence": "^1.2.2"
+  },
+  "devDependencies": {
+    "gulp-jade": "^1.1.0",
+    "gulp-postcss": "^6.4.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-stylelint": "^3.9.0",
+    "gulp-stylus": "^2.6.0",
+    "postcss-reporter": "^3.0.0",
+    "stylelint": "^7.10.1",
+    "stylelint-config-standard": "^16.0.0"
+  },
+  "scripts": {
+    "test": "editorconfig-cli",
+    "build": "gulp build",
+    "start": "npm run build && gulp serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnorVen/game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnorVen/game/issues"
+  },
+  "homepage": "https://github.com/AnorVen/game#readme",
+  "description": ""
+}
