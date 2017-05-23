@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>игра</title>
+	<link rel="stylesheet" href="css/stlyle.min.css">
+
+</head>
+<body>
+<div id="game_area">
+	<div class="area_game__user_count">
+		<span>Счет: </span>
+		<span id="area_game__user_count--total"> 0</span>
+
+	</div>
+
+	<div class="area-game__user-massage">
+		<spam>space fleet</spam>
+		<br><span id="area-game__user-massage--msg">
+			космический бой	</span>
+	</div>
+
+	<table id="area_game__table">
+		<thead>
+		<tr>
+			<td></td>
+			<td>				<p>0</p>			</td>
+			<td>				<p>1</p>			</td>
+			<td>				<p>2</p>			</td>
+			<td>				<p>3</p>			</td>
+			<td>				<p>4</p>			</td>
+			<td>				<p>5</p>			</td>
+			<td>				<p>6</p>			</td>
+			<td>				<p>7</p>			</td>
+			<td>				<p>8</p>			</td>
+			<td>				<p>9</p>			</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>				<p>A</p>			</td>
+			<td id="00">					</td>
+			<td id="01">					</td>
+			<td id="02">					</td>
+			<td id="03">					</td>
+			<td id="04">					</td>
+			<td id="05">					</td>
+			<td id="06">					</td>
+			<td id="07">					</td>
+			<td id="08">					</td>
+		</tr>
+		<tr>
+			<td>				<p>B</p>			</td>
+			<td id="10">					</td>
+			<td id="11">					</td>
+			<td id="12">					</td>
+			<td id="13">					</td>
+			<td id="14">					</td>
+			<td id="15">					</td>
+			<td id="16">					</td>
+			<td id="17">					</td>
+			<td id="18">					</td>
+		</tr>
+		<tr>
+			<td>				<p>C</p>			</td>
+			<td id="20">					</td>
+			<td id="21">					</td>
+			<td id="22">					</td>
+			<td id="23">					</td>
+			<td id="24">					</td>
+			<td id="25">					</td>
+			<td id="26">					</td>
+			<td id="27">					</td>
+			<td id="28">					</td>
+		</tr>
+		<tr>
+			<td>				<p>D</p>			</td>
+			<td id="30">					</td>
+			<td id="31">					</td>
+			<td id="32">					</td>
+			<td id="43">					</td>
+			<td id="44">					</td>
+			<td id="45">					</td>
+			<td id="46">					</td>
+			<td id="47">					</td>
+			<td id="48">					</td>
+		</tr>
+		<tr>
+			<td>				<p>E</p>			</td>
+			<td id="50">					</td>
+			<td id="51">					</td>
+			<td id="52">					</td>
+			<td id="53">					</td>
+			<td id="54">					</td>
+			<td id="55">					</td>
+			<td id="56">					</td>
+			<td id="57">					</td>
+			<td id="58">					</td>
+		</tr>
+		<tr>
+			<td>				<p>F</p>			</td>
+			<td id="60">					</td>
+			<td id="61">					</td>
+			<td id="62">					</td>
+			<td id="63">					</td>
+			<td id="64">					</td>
+			<td id="65">					</td>
+			<td id="66">					</td>
+			<td id="67">					</td>
+			<td id="68">					</td>
+		</tr>
+		<tr>
+			<td>				<p>G</p>			</td>
+			<td id="70">					</td>
+			<td id="71">					</td>
+			<td id="72">					</td>
+			<td id="73">					</td>
+			<td id="74">					</td>
+			<td id="75">					</td>
+			<td id="76">					</td>
+			<td id="77">					</td>
+			<td id="78">					</td>
+		</tr>
+		<tr>
+			<td>				<p>H</p>			</td>
+			<td id="80">					</td>
+			<td id="81">					</td>
+			<td id="82">					</td>
+			<td id="83">					</td>
+			<td id="84">					</td>
+			<td id="85">					</td>
+			<td id="86">					</td>
+			<td id="87">					</td>
+			<td id="88">					</td>
+		</tr>
+		<tr>
+			<td>				<p>I</p>			</td>
+			<td id="90">					</td>
+			<td id="91">					</td>
+			<td id="92">					</td>
+			<td id="93">					</td>
+			<td id="94">					</td>
+			<td id="95">					</td>
+			<td id="96">					</td>
+			<td id="97">					</td>
+			<td id="98">					</td>
+		</tr>
+
+		</tbody>
+	</table>
+	<form action="#" id="area_game__form">
+		<input type="text" name="" id="crdInput" placeholder="Введите коорднаты, например (А:0)">
+		<button id="btnShot" name="clickkForFire" value="выстрел"></button>
+
+	</form>
+
+</div>
+
+
+<script src="js/game.js"></script>
+</body>
+</html>

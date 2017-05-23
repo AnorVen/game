@@ -1,0 +1,92 @@
+
+#game_area {
+  width: 1004px
+  margin: auto
+  padding 0;
+  position: relative
+  background: rgba(#f4ad34, 0.4)
+}
+
+.area_game__user_count {
+  color #ccc
+  float left
+  position absolute
+  top: 32px;
+  left: 10px;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+
+}
+
+.area-game__user-massage {
+  text-align: center;
+  color: rgb(135, 204, 255);
+  font-weight: 600;
+  font-size: 36px;
+  text-transform: uppercase;
+}
+
+#area-game__user-massage--msg {
+  color: rgb(236, 236, 236);
+}
+
+#area_game__table {
+  left: 173px;
+  top: 98px;
+  border: 0;
+  align: center;
+  cellspacing: 0;
+
+}
+#area_game__table > thead > tr > td{
+  width:118px;
+  height:118px;
+  cursor: pointer;
+  background: #647dff;
+}
+
+#area_game__table > thead > tr > td > p,
+  #area_game__table > tbody > tr > td > p {
+    color: #ccc;
+    font-size: 30px;
+    text-align: center;
+
+  }
+  #area_game__table > tbody > tr > td:not(:nth-child(1)):hover::after {
+content: attr(data-title);
+    padding-left: 48px;
+    color: rgba(135, 204, 255, 0.72);
+
+}
+    #area_game__form{
+      margin: 0;
+      padding: 7px;
+      background-color: #30384e;
+    }
+#crdInput{
+  width: 227px;
+  padding: 5px;
+  font-size: 13px;
+  border: 1px solid #4e6da2;
+
+}
+  #btnShot{
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid #4e6da2;
+    color: #2f3750;
+    background-color: #ececec;
+  }
+    .ship-red{
+      background: red center;
+      transition: 0.5s;
+    }
+      .ship-blue{
+        background: blue center;
+        transition: 0.5s;
+      }
+        .asteroid{
+          background: gray center;
+          transition: 0.5s;
+        }

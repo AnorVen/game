@@ -1,32 +1,79 @@
 "use strict";
-
 var gulp = require("gulp");
+var autoprefixer = require("autoprefixer");
+var uglify = require('gulp-uglify');
+var watch = require('gulp-watch');
+
 var less = require("gulp-less");
 var plumber = require("gulp-plumber");
 var postcss = require("gulp-postcss");
-var autoprefixer = require("autoprefixer");
 var mqpacker = require("css-mqpacker");
 var imagemin = require("gulp-imagemin");
 var minify = require("gulp-csso");
 var rename = require("gulp-rename");
 var svgmin = require("gulp-svgmin")
 var svgstore = require("gulp-svgstore");
-var server = require("browser-sync").create();
 var cleanCSS = require ('gulp-clean-css');
 var gcmq = require('gulp-group-css-media-queries');
 var run = require("run-sequence");
 var del = require("del");
 var jade = require('gulp-jade');
-var data = require('gulp-data');
 var stylus = require('gulp-stylus');
 var sourcemaps = require('gulp-sourcemaps');
+var rigger = require('gulp-rigger');
+var browserSync = require("browser-sync");
+var reload = browserSync.reload;
+var server = require("browser-sync").create();
+
+
+
+var path = {
+    build: { //Тут мы укажем куда складывать готовые после сборки файлы
+        html: 'build/',
+        js: 'build/js/',
+        css: 'build/css/',
+        img: 'build/img/',
+        fonts: 'build/fonts/'
+    },
+    src: { //Пути откуда брать исходники
+        html: 'src/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
+        js: 'src/js/main.js',//В стилях и скриптах нам понадобятся только main файлы
+        style: 'src/style/style.styl',
+        img: 'src/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
+        fonts: 'src/fonts/**/*.*'
+    },
+    watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
+        html: 'src/**/*.html',
+        js: 'src/js/**/*.js',
+        style: 'src/style/**/*.styl',
+        img: 'src/img/**/*.*',
+        fonts: 'src/fonts/**/*.*'
+    },
+    clean: './build'
+};
+
+var config = {
+    server: {
+        baseDir: "./build"
+    },
+    tunnel: true,
+    host: 'localhost',
+    port: 9000,
+    logPrefix: "Frontend_Devil",
+    notify: false,
+    open: true,
+    cors: true,
+    ui: false
+};
+
 
 gulp.task("style", function() {
-	return gulp.src('src/**/*.styl')
+	return gulp.src(path.src.style)
  // gulp.src("src/less/style.less")
+
     .pipe(plumber())
-    //.pipe(less())
     .pipe(sourcemaps.init())
+    //.pipe(less())    
     .pipe(stylus())
     .pipe(gcmq())
     .pipe(postcss([
@@ -35,24 +82,19 @@ gulp.task("style", function() {
       ]}),
       mqpacker({
        sort: true
-       })
+       }),
     ]))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest("build/css"))
+    .pipe(gulp.dest(path.build.css))
     .pipe(cleanCSS())
    // .pipe(minify())
     .pipe(rename("style.min.css"))
-    .pipe(gulp.dest("build/css"))
-    .pipe(server.stream());
+    .pipe(gulp.dest(path.build.css))
+    .pipe(reload({stream: true}));
+    //.pipe(server.stream());
 });
 
 
-
-gulp.task('default', function () {
-    gulp.src('src/style.css')
-        .pipe(gcmq())
-        .pipe(gulp.dest('dist'));
-});
 
 gulp.task("images", function() {
   return gulp.src("build/img/**/*.{png,jpg,gif}")
@@ -60,24 +102,22 @@ gulp.task("images", function() {
       imagemin.optipng({optimizationLevel: 3}),
       imagemin.jpegtran({progressive: true})
 ]))
-    .pipe(gulp.dest("build/img"));
+    .pipe(gulp.dest("build/img"))
+    .pipe(reload({stream: true}));;
 });
 
-gulp.task("copy", function() {
+/*gulp.task("copy", function() {
  return gulp.src([
- "fonts/**/*.{woff,woff2}",
- "img/**",
- "js/**",
- "*.html"
+ path.src.fonts,
+ path.src.img,
+ path.src.js,
+ path.src.html
  ], {
  base: "."
  })
  .pipe(gulp.dest("build"));
-});
+});*/
 
-gulp.task("clean", function() {
- return del("build");
-});
 
 gulp.task("symbols", function() {
  return gulp.src("build/img/*.svg")
@@ -89,17 +129,34 @@ gulp.task("symbols", function() {
  .pipe(gulp.dest("build/img"));
 });
 
+gulp.task('html:build', function () {
+    gulp.src(path.src.html) 
+        .pipe(rigger())
+        .pipe(gulp.dest('build/'))
+        .pipe(reload({stream: true}));
+});
+
+/*
 gulp.task("html:copy", function() {
- return gulp.src("*.html")
- .pipe(gulp.dest("build"));
+ return gulp.src(path.src.html)
+ .pipe(rigger())
+ .pipe(gulp.dest(path.build.html));
 });
 
 gulp.task("html:update", ["html:copy"], function(done) {
- server.reload();
+
+	 .pipe(reload({stream: true}))
+ //server.reload();
  done();
+});*/
+
+
+gulp.task("clean", function() {
+ return del("build");
 });
 
-gulp.task("serve", function() {
+
+/*gulp.task("serve", function() {
   server.init({
     server: "./build/",
     notify: false,
@@ -108,18 +165,19 @@ gulp.task("serve", function() {
     ui: false
   });
 
- // gulp.watch("src/less/**/*.less", ["style"]);
- 	gulp.watch("src/**/*.styl", ["style"]);
-  gulp.watch("*src/.html", ["html:update"]);
-  gulp.watch("*src/**/.jade", ["jade"]);
-});
+ // gulp.watch("src/less/**//*.less", ["style"]);
+ 	gulp.watch("src/**//*.styl", ["style"]);
+  gulp.watch("src/*.html", ["html:update"]);
+ // gulp.watch("src/**//*.jade", ["jade:update"]);
+});*/
 
 gulp.task("build", function(fn){
  run(
   "clean",
-   "copy",
-   "jade",
+   "html:build",
+  // "jade",
    "style",
+   "js:build",
    "symbols",
    "images",
  fn
@@ -127,10 +185,60 @@ gulp.task("build", function(fn){
 });
 
 
-gulp.task("jade", function() {
-    return gulp.src('src/**/*.jade')
-        .pipe(jade()) 
-        .pipe(gulp.dest('builds/')); // указываем gulp куда положить скомпилированные HTML файлы
-        server.reload();
+gulp.task('serve', ['watch'], function () {
+    browserSync(config);
 });
+
+gulp.task('js:build', function () {
+    gulp.src(path.src.js) //Найдем наш main файл
+        .pipe(rigger()) //Прогоним через rigger
+        .pipe(sourcemaps.init()) //Инициализируем sourcemap
+        .pipe(uglify()) //Сожмем наш js
+        .pipe(sourcemaps.write()) //Пропишем карты
+        .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
+        server.reload(); //И перезагрузим сервер
+});
+
+gulp.task('fonts:build', function() {
+    gulp.src(path.src.fonts)
+        .pipe(gulp.dest(path.build.fonts))
+});
+
+gulp.task('watch', function(){
+    watch([path.watch.html], function(event, cb) {
+        gulp.start('html:build');
+    });
+    watch([path.watch.style], function(event, cb) {
+        gulp.start('style');
+    });
+    watch([path.watch.js], function(event, cb) {
+        gulp.start('js:build');
+    });
+    watch([path.watch.img], function(event, cb) {
+        gulp.start('image');
+    });
+    watch([path.watch.fonts], function(event, cb) {
+        gulp.start('fonts:build');
+    });
+});
+
+/*
+попытка подключить jade. правда мне не удалось сделать так, чтоб при найденной 
+ошибке процесс serve не вылитал..
+
+
+gulp.task("jade:update",["jade"], function(done) {
+	server.reload();
+  done();
+});
+
+gulp.task("jade", function() {
+    return gulp.src('src/**//*.jade')
+    		 .pipe(plumber())
+       /* .pipe(jade()) 
+        .pipe(gulp.dest('build/')); // указываем gulp куда положить скомпилированные HTML файлы
+        server.reload();
+        done();
+});*/
+
 
